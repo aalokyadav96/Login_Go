@@ -12,7 +12,6 @@ const PORT = "localhost:4000"
 var tmpl = template.Must(template.ParseGlob("templates/*.html"))
 
 func main() {
-testRedis()
 	HandleRoutes()
 	return
 }
@@ -29,17 +28,35 @@ func HandleRoutes() {
 	router.GET("/user/:name", UserProfile)	
 */	
 
+//--------Search--------//
+//	router.GET("/search", Search)
+
+//--------Chats--------//
+//	router.GET("/chats", Chat)
+//	router.GET("/chat/:userId", ShowPost)
+
+
+//--------CRUD--------//
+	router.GET("/buy", Buy)
+	router.POST("/buy", Buy)
+	router.GET("/sell", Sell)
+	router.POST("/sell", Sell)
+	router.GET("/deliver", Deliver)
+	router.POST("/deliver", Deliver)
+
+//--------Login--------//
 	router.GET("/register", Register)
 	router.POST("/register", Register)
 	router.GET("/login", loginHandler)
 	router.POST("/login", loginHandler)
 	router.GET("/logout", logoutHandler)
 
-
+//--------FileServer--------//
 	router.NotFound = http.FileServer(http.Dir(""))
 	router.ServeFiles("/img/*filepath", http.Dir("uploads"))
 	router.ServeFiles("/static/*filepath", http.Dir("static"))
-	
+
+//--------Server--------//
 	log.Println("Starting erver on ", PORT)
 	err := http.ListenAndServe(PORT, router)
 //err := http.ListenAndServe(GetPort(), router)
